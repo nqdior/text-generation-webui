@@ -14,7 +14,9 @@ from transformers import (
     AutoModelForCausalLM,
     AutoModelForSeq2SeqLM,
     AutoTokenizer,
-    BitsAndBytesConfig
+    BitsAndBytesConfig,
+    LlamaTokenizer,
+    AutoModelForVision2Seq
 )
 
 import modules.shared as shared
@@ -99,6 +101,21 @@ def load_tokenizer(model_name, model):
     path_to_model = Path(f"{shared.args.model_dir}/{model_name}/")
     if any(s in model_name.lower() for s in ['gpt-4chan', 'gpt4chan']) and Path(f"{shared.args.model_dir}/gpt-j-6B/").exists():
         tokenizer = AutoTokenizer.from_pretrained(Path(f"{shared.args.model_dir}/gpt-j-6B/"))
+    elif model_name.startswith("stabilityai_japanese-stablelm-instruct-alpha-") or \
+        model_name.startswith("stabilityai_japanese-instructblip") or \
+        model_name.startswith("stabilityai_japanese-stablelm-base-alpha-"):
+        try:
+            tokenizer = LlamaTokenizer.from_pretrained("novelai/nerdstash-tokenizer-v1", 
+                trust_remote_code=shared.args.trust_remote_code,
+                use_fast=False,
+                additional_special_tokens=['▁▁']
+            )
+        except ValueError:
+            tokenizer = LlamaTokenizer.from_pretrained("novelai/nerdstash-tokenizer-v1", 
+                trust_remote_code=shared.args.trust_remote_code,
+                use_fast=False,
+                additional_special_tokens=['▁▁']
+            )
     elif path_to_model.exists():
         try:
             tokenizer = AutoTokenizer.from_pretrained(
@@ -136,6 +153,8 @@ def huggingface_loader(model_name):
     path_to_model = Path(f'{shared.args.model_dir}/{model_name}')
     if 'chatglm' in model_name.lower():
         LoaderClass = AutoModel
+    elif model_name == "stabilityai_japanese-instructblip-alpha":
+        LoaderClass = AutoModelForVision2Seq
     else:
         config = AutoConfig.from_pretrained(path_to_model, trust_remote_code=shared.args.trust_remote_code)
         if config.to_dict().get("is_encoder_decoder", False):
