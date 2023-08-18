@@ -1,4 +1,29 @@
-# Text generation web UI
+# Text generation web UI for stableLM
+
+## 概要
+japanese-stablelm系をロードできるように改修した[text-generation-webui](https://github.com/oobabooga/text-generation-webui)。
+
+## 対応するLLM
+* [stabilityai/japanese-stablelm-base-alpha-7b](https://huggingface.co/stabilityai/japanese-stablelm-base-alpha-7b)
+* [stabilityai/japanese-stablelm-instruct-alpha-7b](https://huggingface.co/stabilityai/japanese-stablelm-instruct-alpha-7b)
+* [stabilityai/japanese-instructblip-alpha](https://huggingface.co/stabilityai/japanese-instructblip-alpha)
+
+## 使い方
+1. [One-click installers](https://github.com/oobabooga/text-generation-webui#installation)を使用して、text-generation-webuiをインストール
+1. `oobabooga_{os}\text-generation-webui` を `oobabooga_{os}\text-generation-webui)_backup`にリネームする
+1. `oobabooga_{os}\` へ [このリポジトリ](https://github.com/nqdior/text-generation-webui) をクローンする
+1. 認証が必要なため、webuiのダウンローダーは機能しない。使用したいモデルを手動でHuggingfaceからダウンロードし、`text-generation-webui\models` に配置する
+1. **`text-generation-webui\models` にモデルを配置する際は、`stabilityai_{model_name}` ディレクトリ名で配置する（webuiの標準仕様）**  
+例 … `models\stabilityai_japanese-stablelm-instruct-alpha-7b`, `models\stabilityai_japanese-instructblip-alpha`
+1. 通常通り `start_windows.bat` を用いてgradioを起動する。
+
+## 課題
+* japanese-instructblip-alphaはロードできるが、画像認識には対応していないため別途改修が必要。
+
+対応してくれる人がいたらプルリクエストを投げてください。  
+暫定対応版のため、リファクタなどのプルリクエストも歓迎します。
+
+# Text generation web UI default README.md
 
 A Gradio web UI for Large Language Models.
 
