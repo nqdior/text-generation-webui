@@ -113,7 +113,7 @@ def load_tokenizer(model_name, model):
         except ValueError:
             tokenizer = LlamaTokenizer.from_pretrained("novelai/nerdstash-tokenizer-v1", 
                 trust_remote_code=shared.args.trust_remote_code,
-                use_fast=False,
+                use_fast=True,
                 additional_special_tokens=['▁▁']
             )
     elif path_to_model.exists():
