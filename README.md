@@ -13,14 +13,15 @@ japanese-stablelm系をロードできるように改修した[text-generation-w
 1. `oobabooga_{os}\text-generation-webui` を `oobabooga_{os}\text-generation-webui)_backup`にリネームする
 1. `oobabooga_{os}\` へ [このリポジトリ](https://github.com/nqdior/text-generation-webui) をクローンする
 1. 認証が必要なため、webuiのダウンローダーは機能しない。使用したいモデルを手動でHuggingfaceからダウンロードし、`text-generation-webui\models` に配置する
-1. 【重要】 `text-generation-webui\models` にモデルを配置する際は、`stabilityai_{model_name}` ディレクトリ名で配置する（webuiの標準仕様）  
+1. **`text-generation-webui\models` にモデルを配置する際は、`stabilityai_{model_name}` ディレクトリ名で配置する（webuiの標準仕様）**  
 例 … `models\stabilityai_japanese-stablelm-instruct-alpha-7b`, `models\stabilityai_japanese-instructblip-alpha`
 1. 通常通り `start_windows.bat` を用いてgradioを起動する。
 
 ## 課題
 * japanese-instructblip-alphaはロードできるが、画像認識には対応していないため別途改修が必要。
 
-対応してくれる人がいたらプルリクエストを投げてください。暫定対応版のため、リファクタなどのプルリクエストも歓迎します。
+対応してくれる人がいたらプルリクエストを投げてください。  
+暫定対応版のため、リファクタなどのプルリクエストも歓迎します。
 
 # Text generation web UI default README.md
 
